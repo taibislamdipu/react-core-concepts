@@ -15,6 +15,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>I am a React person</p>
+    
+        <RandomUser></RandomUser>
+    
         <Counter></Counter>
 
         <Users></Users>
@@ -101,6 +104,33 @@ function Person(props) {
     <div style={{ border: '2px solid gold', width: '400px', margin: '10px' }}>
       <h3>My Name: {props.name}</h3>
       <p>My Profession: {props.job}</p>
+    </div>
+  )
+}
+
+function RandomUser() {
+
+  const [users, setUsers] = useState();
+
+  useEffect(() => {
+    fetch('https://randomuser.me/api/?results=12')
+      .then(res => res.json())
+      .then(data => setUsers(data))
+  }, [])
+
+  console.log('randomusers', users);
+
+  return (
+    <div>
+      <h1>Random Users</h1>
+
+      <ul>
+        {
+          users && users.hasOwnProperty('results') &&
+          users.results.map(item => <li key={item.email}> {item.email}</li>)
+        }
+      </ul>
+
     </div>
   )
 }
